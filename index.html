@@ -5,83 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>송금 안내</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bank-btn {
+            @apply flex flex-col items-center justify-center p-3 bg-white rounded-2xl shadow-sm border border-gray-100 active:bg-gray-100 active:scale-95 transition-all;
+        }
+        .bank-name {
+            @apply text-[11px] font-bold text-gray-700 mt-1;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
     <div class="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-2xl p-8">
         <h2 class="text-xl font-bold text-center mb-6 text-gray-800">계좌 정보를 확인해주세요</h2>
         
         <div id="infoCard" class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 text-center mb-8">
-            <div id="displayBank" class="text-blue-600 font-bold text-lg leading-tight">은행 정보 로딩중...</div>
+            <div id="displayBank" class="text-blue-600 font-bold text-lg leading-tight">로딩중...</div>
             <div id="displayAcc" class="text-2xl font-mono font-bold my-2 tracking-tight text-gray-900">000-000-0000</div>
             <div id="displayName" class="text-sm font-medium text-gray-500">예금주 로딩중...</div>
         </div>
         
         <button id="confirmBtn" onclick="handleConfirm()" 
-            class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg shadow-lg hover:bg-blue-700 active:scale-95 transition-all mb-4">
+            class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all mb-4">
             계좌번호 확인 및 복사하기
         </button>
         
         <div id="bankList" class="hidden pt-4 border-t border-gray-100">
             <p class="text-center text-xs text-gray-500 mb-4 font-medium">✓ 복사 완료! 입금하실 앱을 선택하세요</p>
             
-            <div class="grid grid-cols-3 gap-3">
-                <button onclick="openApp('kakaobank')" class="bank-btn">카카오뱅크</button>
-                <button onclick="openApp('kbank')" class="bank-btn">케이뱅크</button>
-                <button onclick="openApp('toss')" class="bank-btn">토스</button>
-                <button onclick="openApp('kb')" class="bank-btn">KB국민</button>
-                <button onclick="openApp('shinhan')" class="bank-btn">신한</button>
-                <button onclick="openApp('woori')" class="bank-btn">우리</button>
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="openBankChooser()" class="bank-btn"><span class="bank-name">카카오뱅크</span></button>
+                <button onclick="openBankChooser()" class="bank-btn"><span class="bank-name">토스</span></button>
+                <button onclick="openBankChooser()" class="bank-btn"><span class="bank-name">케이뱅크</span></button>
+                <button onclick="openBankChooser()" class="bank-btn"><span class="bank-name">KB국민</span></button>
+                <button onclick="openBankChooser()" class="bank-btn"><span class="bank-name">신한 SOL</span></button>
+                <button onclick="openBankChooser()" class="bank-btn"><span class="bank-name">우리은행</span></button>
+                <button onclick="openBankChooser()" class="bank-btn"><span class="bank-name">하나은행</span></button>
+                <button onclick="openBankChooser()" class="bank-btn"><span class="bank-name">NH농협</span></button>
+                <button onclick="location.reload()" class="bank-btn bg-gray-50"><span class="bank-name text-gray-400">새로고침</span></button>
             </div>
         </div>
     </div>
 
 <script>
+// 1. 데이터 파싱
 const params = new URLSearchParams(window.location.search);
-const bank = params.get('bank') || '은행';
-const acc  = params.get('acc')  || '';
-const name = params.get('name') || '';
+const acc = params.get('acc') || '';
+document.getElementById('displayBank').innerText = params.get('bank') || '은행 정보';
+document.getElementById('displayAcc').innerText = acc || '계좌번호 없음';
+document.getElementById('displayName').innerText = `예금주: ${params.get('name') || '미지정'}`;
 
-document.getElementById('displayBank').innerText = bank;
-document.getElementById('displayAcc').innerText = acc;
-document.getElementById('displayName').innerText = `예금주: ${name}`;
+// 2. 주소창 깔끔하게 지우기 (접속 직후 파라미터 숨김)
+if (window.location.search) {
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
 
+// 3. 계좌 복사 및 버튼 전환
 function handleConfirm() {
-  if (!acc) {
-    alert('계좌 정보가 없습니다.');
-    return;
-  }
+    if (!acc) return alert('계좌 정보가 없습니다.');
 
-  navigator.clipboard.writeText(acc).then(() => {
+    // 클립보드 복사 실행
+    const el = document.createElement('textarea');
+    el.value = acc;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+
     document.getElementById('confirmBtn').classList.add('hidden');
     document.getElementById('bankList').classList.remove('hidden');
-  });
 }
 
-/**
- * 🔥 allqr 방식 핵심
- * OS에게 "이 텍스트를 처리할 수 있는 앱"을 맡긴다
- */
+// 4. 요청하신 안드로이드 앱 선택기 로직 (중심 포인트)
 function openBankChooser() {
-  const ua = navigator.userAgent.toLowerCase();
-  const text = encodeURIComponent(acc);
+    const ua = navigator.userAgent.toLowerCase();
+    const text = encodeURIComponent(acc);
 
-  // ✅ Android : 앱 선택기 100% 뜸
-  if (ua.includes('android')) {
-    location.href =
-      `intent://send?text=${text}` +
-      `#Intent;action=android.intent.action.SEND;` +
-      `type=text/plain;end`;
-    return;
-  }
+    // ✅ Android : 앱 선택기(Intent) 띄우기
+    if (ua.includes('android')) {
+        location.href =
+            `intent://send?text=${text}` +
+            `#Intent;action=android.intent.action.SEND;` +
+            `type=text/plain;end`;
+        return;
+    }
 
-  // ✅ iOS : 자동 실행은 제한 → UX로 처리
-  alert(
-    "계좌번호가 복사되었습니다.\n\n" +
-    "사용하시는 은행 앱을 열어 붙여넣기 후 송금해주세요."
-  );
+    // ✅ iOS : 아이폰은 Intent를 지원하지 않으므로 안내 알림
+    alert(
+        "계좌번호가 복사되었습니다.\n\n" +
+        "사용하시는 은행 앱을 열어 붙여넣기 후 송금해주세요."
+    );
 }
 </script>
-
 </body>
 </html>
-
