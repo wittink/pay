@@ -1,153 +1,99 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>송금 안내</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>송금 안내</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
-<div class="w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8">
 
+  <div class="w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8">
     <h2 class="text-xl font-bold text-center mb-6 text-gray-800">
-        계좌 정보를 확인해주세요
+      계좌 정보를 확인해주세요
     </h2>
 
-    <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 text-center mb-8">
-        <div id="displayBank" class="text-blue-600 font-bold text-lg">은행</div>
-        <div id="displayAcc" class="text-2xl font-mono font-bold my-2 text-gray-900">
-            000-000-0000
-        </div>
-        <div id="displayName" class="text-sm font-medium text-gray-500">
-            예금주
-        </div>
+    <!-- 계좌 정보 -->
+    <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 text-center mb-6">
+      <div id="displayBank" class="text-blue-600 font-bold text-lg">
+        은행 정보 로딩중...
+      </div>
+      <div id="displayAcc" class="text-2xl font-mono font-bold my-2 text-gray-900">
+        000-000-0000
+      </div>
+      <div id="displayName" class="text-sm font-medium text-gray-500">
+        예금주 로딩중...
+      </div>
     </div>
 
-    <button id="confirmBtn"
-        class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg shadow-lg hover:bg-blue-700 active:scale-95 transition-all">
-        계좌번호 복사하고 은행앱 열기
+    <!-- 버튼 -->
+    <button
+      id="confirmBtn"
+      onclick="copyAndOpen()"
+      class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg shadow-lg hover:bg-blue-700 active:scale-95 transition-all"
+    >
+      계좌번호 복사하고 은행앱 열기
     </button>
-
-    <p id="statusText" class="text-center text-xs text-gray-400 mt-4 hidden"></p>
-
-</div>
+  </div>
 
 <script>
-/* =====================
-   URL 파라미터
-===================== */
+/* ===============================
+   1. URL 파라미터 읽기
+   =============================== */
 const params = new URLSearchParams(location.search);
-const bankName = params.get('bank') || '은행 정보 없음';
-const account = params.get('acc') || '';
-const owner = params.get('name') || '';
+const bank = params.get("bank") || "은행 정보 없음";
+const acc  = params.get("acc")  || "";
+const name = params.get("name") || "예금주 미지정";
 
-document.getElementById('displayBank').innerText = bankName;
-document.getElementById('displayAcc').innerText = account || '계좌번호 없음';
-document.getElementById('displayName').innerText = owner ? `예금주: ${owner}` : '';
+document.getElementById("displayBank").innerText = bank;
+document.getElementById("displayAcc").innerText  = acc || "계좌번호 없음";
+document.getElementById("displayName").innerText = `예금주: ${name}`;
 
-/* =====================
-   기기 판별
-===================== */
-const ua = navigator.userAgent.toLowerCase();
-const isAndroid = ua.includes('android');
-const isIOS = /iphone|ipad|ipod/.test(ua);
+/* ===============================
+   2. 복사 + OS 앱 선택 호출
+   =============================== */
+function copyAndOpen() {
+  if (!acc) {
+    alert("계좌번호가 없습니다.");
+    return;
+  }
 
-/* =====================
-   은행 앱 딥링크
-===================== */
-const bankApps = {
-    kakaobank: {
-        android: 'intent://#Intent;scheme=kakaobank;package=com.kakaobank.channel;end',
-        ios: 'kakaobank://',
-        store: {
-            android: 'https://play.google.com/store/apps/details?id=com.kakaobank.channel',
-            ios: 'https://apps.apple.com/kr/app/id1258016944'
-        }
-    },
-    kbank: {
-        android: 'intent://#Intent;scheme=kbank;package=com.kbankwith.smartbank;end',
-        ios: 'kbank://',
-        store: {
-            android: 'https://play.google.com/store/apps/details?id=com.kbankwith.smartbank',
-            ios: 'https://apps.apple.com/kr/app/id398456030'
-        }
-    },
-    toss: {
-        android: 'intent://#Intent;scheme=toss;package=viva.republica.toss;end',
-        ios: 'toss://',
-        store: {
-            android: 'https://play.google.com/store/apps/details?id=viva.republica.toss',
-            ios: 'https://apps.apple.com/kr/app/id839333328'
-        }
-    },
-    kb: {
-        android: 'intent://#Intent;scheme=kbbank;package=com.kbstar.kbbank;end',
-        ios: 'kbbank://',
-        store: {
-            android: 'https://play.google.com/store/apps/details?id=com.kbstar.kbbank',
-            ios: 'https://apps.apple.com/kr/app/id373742138'
-        }
-    },
-    shinhan: {
-        android: 'intent://#Intent;scheme=shinhan-sr-app;package=com.shinhan.sbanking;end',
-        ios: 'shinhan-sr-app://',
-        store: {
-            android: 'https://play.google.com/store/apps/details?id=com.shinhan.sbanking',
-            ios: 'https://apps.apple.com/kr/app/id357484932'
-        }
-    },
-    woori: {
-        android: 'intent://#Intent;scheme=wbbank;package=com.wooribank.smart;end',
-        ios: 'wbbank://',
-        store: {
-            android: 'https://play.google.com/store/apps/details?id=com.wooribank.smart',
-            ios: 'https://apps.apple.com/kr/app/id393499958'
-        }
-    }
-};
+  navigator.clipboard.writeText(acc).then(() => {
+    openOSPicker();
+  }).catch(() => {
+    alert("복사에 실패했습니다. 수동으로 복사해주세요.");
+  });
+}
 
-/* =====================
-   실행 로직
-===================== */
-document.getElementById('confirmBtn').onclick = () => {
+/* ===============================
+   3. 핵심: OS에게 위임
+   =============================== */
+function openOSPicker() {
+  const text = `${bank}\n${acc}\n${name}`;
 
-    if (!account) {
-        alert('계좌번호가 없습니다');
-        return;
-    }
+  // Android: SEND intent → 앱 선택창
+  if (/android/i.test(navigator.userAgent)) {
+    location.href =
+      "intent://send/#Intent;" +
+      "action=android.intent.action.SEND;" +
+      "type=text/plain;" +
+      "S.android.intent.extra.TEXT=" + encodeURIComponent(text) + ";" +
+      "end";
+    return;
+  }
 
-    navigator.clipboard.writeText(account);
+  // iOS: Web Share API → 공유 시트 (은행앱 포함)
+  if (navigator.share) {
+    navigator.share({
+      text: text
+    });
+    return;
+  }
 
-    if (!isAndroid && !isIOS) {
-        alert('모바일에서만 은행앱을 실행할 수 있습니다');
-        return;
-    }
-
-    const bankKey = Object.keys(bankApps)
-        .find(k => bankName.includes(k) || bankName.toLowerCase().includes(k));
-
-    if (!bankKey) {
-        alert('지원하지 않는 은행입니다');
-        return;
-    }
-
-    const app = bankApps[bankKey];
-    const appLink = isAndroid ? app.android : app.ios;
-    const storeLink = isAndroid ? app.store.android : app.store.ios;
-
-    document.getElementById('statusText').innerText =
-        '은행앱을 여는 중입니다...';
-    document.getElementById('statusText').classList.remove('hidden');
-
-    const timer = setTimeout(() => {
-        location.href = storeLink;
-    }, 1200);
-
-    location.href = appLink;
-
-    setTimeout(() => clearTimeout(timer), 1500);
-};
+  alert("이 기능은 모바일에서만 사용 가능합니다.");
+}
 </script>
+
 </body>
 </html>
