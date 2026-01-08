@@ -37,73 +37,51 @@
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const bank = params.get('bank') || '은행 정보 없음';
-const acc = params.get('acc') || '';
-const name = params.get('name') || '예금주 미지정';
+const bank = params.get('bank') || '은행';
+const acc  = params.get('acc')  || '';
+const name = params.get('name') || '';
 
 document.getElementById('displayBank').innerText = bank;
-document.getElementById('displayAcc').innerText = acc || '계좌번호 없음';
+document.getElementById('displayAcc').innerText = acc;
 document.getElementById('displayName').innerText = `예금주: ${name}`;
 
 function handleConfirm() {
-    if (!acc) {
-        alert("❌ 계좌 정보가 없습니다.");
-        return;
-    }
-    navigator.clipboard.writeText(acc).then(() => {
-        document.getElementById('confirmBtn').classList.add('hidden');
-        document.getElementById('bankList').classList.remove('hidden');
-    }).catch(() => {
-        alert(`복사 실패: ${acc}\n직접 복사해주세요.`);
-    });
+  if (!acc) {
+    alert('계좌 정보가 없습니다.');
+    return;
+  }
+
+  navigator.clipboard.writeText(acc).then(() => {
+    document.getElementById('confirmBtn').classList.add('hidden');
+    document.getElementById('bankList').classList.remove('hidden');
+  });
 }
 
-const bankLinks = {
-    kakaobank: {
-        android: 'intent://main#Intent;scheme=kakaobank;package=com.kakaobank.channel;end',
-        ios: 'kakaobank://'
-    },
-    kbank: {
-        android: 'intent://main#Intent;scheme=kbank;package=com.kbankwith.smartbank;end',
-        ios: 'kbank://'
-    },
-    toss: {
-        android: 'intent://#Intent;scheme=toss;package=viva.republica.toss;end',
-        ios: 'toss://'
-    },
-    kb: {
-        android: 'intent://#Intent;scheme=kbbank;package=com.kbstar.kbbank;end',
-        ios: 'kbbank://'
-    },
-    shinhan: {
-        android: 'intent://#Intent;scheme=shinhan-sr-app;package=com.shinhan.sbanking;end',
-        ios: 'shinhan-sr-app://'
-    },
-    woori: {
-        android: 'intent://#Intent;scheme=wbbank;package=com.wooribank.smart;end',
-        ios: 'wbbank://'
-    }
-};
+/**
+ * 🔥 allqr 방식 핵심
+ * OS에게 "이 텍스트를 처리할 수 있는 앱"을 맡긴다
+ */
+function openBankChooser() {
+  const ua = navigator.userAgent.toLowerCase();
+  const text = encodeURIComponent(acc);
 
-function openApp(bankKey) {
-    const ua = navigator.userAgent.toLowerCase();
-    const isAndroid = ua.includes('android');
-    const isIOS = /iphone|ipad|ipod/.test(ua);
+  // ✅ Android : 앱 선택기 100% 뜸
+  if (ua.includes('android')) {
+    location.href =
+      `intent://send?text=${text}` +
+      `#Intent;action=android.intent.action.SEND;` +
+      `type=text/plain;end`;
+    return;
+  }
 
-    const link = bankLinks[bankKey];
-    if (!link) {
-        alert('지원하지 않는 은행입니다');
-        return;
-    }
-
-    if (isAndroid) {
-        location.href = link.android;
-    } else if (isIOS) {
-        location.href = link.ios;
-    } else {
-        alert('모바일에서만 사용 가능합니다');
-    }
+  // ✅ iOS : 자동 실행은 제한 → UX로 처리
+  alert(
+    "계좌번호가 복사되었습니다.\n\n" +
+    "사용하시는 은행 앱을 열어 붙여넣기 후 송금해주세요."
+  );
 }
 </script>
+
 </body>
 </html>
+
