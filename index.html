@@ -2,42 +2,79 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>송금 안내</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bank-item { @apply flex flex-col items-center justify-center p-4 bg-white rounded-2xl shadow-sm border border-gray-100 active:bg-blue-50 active:scale-95 transition-all; }
+        .bank-text { @apply text-[11px] font-bold text-gray-600 mt-2; }
+    </apply>
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
-    <div class="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-2xl p-8 text-center">
-        <h2 class="text-xl font-bold mb-6 text-gray-800">계좌 정보를 확인해주세요</h2>
+    <div class="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-2xl p-8">
+        <h2 class="text-xl font-bold text-center mb-6 text-gray-800">송금하실 앱을 선택하세요</h2>
         
-        <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 mb-8">
-            <div id="displayBank" class="text-blue-600 font-bold text-lg">은행</div>
-            <div id="displayAcc" class="text-2xl font-mono font-bold my-2 text-gray-900">000-000-0000</div>
-            <div id="displayName" class="text-sm font-medium text-gray-500">예금주</div>
+        <div class="bg-blue-50 border-2 border-blue-100 rounded-2xl p-5 text-center mb-8">
+            <div id="displayBank" class="text-blue-600 font-bold text-sm mb-1 italic">은행 정보</div>
+            <div id="displayAcc" class="text-2xl font-mono font-bold text-gray-900 tracking-tighter">000-000-0000</div>
+            <div id="displayName" class="text-xs font-medium text-gray-400 mt-1">예금주 미지정</div>
         </div>
         
-        <button id="confirmBtn" onclick="handleConfirm()" 
-            class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all">
-            계좌번호 복사 및 은행 열기
-        </button>
-
-        <p class="mt-4 text-xs text-gray-400">버튼을 누르면 설치된 은행 앱 목록이 나타납니다.</p>
+        <div class="grid grid-cols-3 gap-3">
+            <button onclick="pay('kakaobank://')" class="bank-item">
+                <div class="w-10 h-10 bg-[#FFEB00] rounded-full flex items-center justify-center font-bold">카</div>
+                <span class="bank-text">카카오뱅크</span>
+            </button>
+            <button onclick="pay('supertoss://')" class="bank-item">
+                <div class="w-10 h-10 bg-[#0064FF] rounded-full flex items-center justify-center text-white font-bold">토</div>
+                <span class="bank-text">토스</span>
+            </button>
+            <button onclick="pay('kbank://')" class="bank-item">
+                <div class="w-10 h-10 bg-[#002B5B] rounded-full flex items-center justify-center text-white font-bold">K</div>
+                <span class="bank-text">케이뱅크</span>
+            </button>
+            <button onclick="pay('kbbank://')" class="bank-item">
+                <div class="w-10 h-10 bg-[#FFBC00] rounded-full flex items-center justify-center text-white font-bold">KB</div>
+                <span class="bank-text">국민은행</span>
+            </button>
+            <button onclick="pay('shinhan-sr-app://')" class="bank-item">
+                <div class="w-10 h-10 bg-[#0046FF] rounded-full flex items-center justify-center text-white font-bold">신</div>
+                <span class="bank-text">신한은행</span>
+            </button>
+            <button onclick="pay('wbbank://')" class="bank-item">
+                <div class="w-10 h-10 bg-[#0094CE] rounded-full flex items-center justify-center text-white font-bold">우</div>
+                <span class="bank-text">우리은행</span>
+            </button>
+            <button onclick="pay('hanabank://')" class="bank-item">
+                <div class="w-10 h-10 bg-[#008485] rounded-full flex items-center justify-center text-white font-bold">하</div>
+                <span class="bank-text">하나은행</span>
+            </button>
+            <button onclick="pay('nhallonepay-ansim://')" class="bank-item">
+                <div class="w-10 h-10 bg-[#00A651] rounded-full flex items-center justify-center text-white font-bold">NH</div>
+                <span class="bank-text">농협</span>
+            </button>
+            <button onclick="location.reload()" class="bank-item bg-gray-50">
+                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white font-bold">↻</div>
+                <span class="bank-text text-gray-400">새로고침</span>
+            </button>
+        </div>
     </div>
 
 <script>
+// 데이터 세팅
 const params = new URLSearchParams(window.location.search);
 const acc = params.get('acc') || '';
-document.getElementById('displayBank').innerText = params.get('bank') || '은행';
-document.getElementById('displayAcc').innerText = acc;
-document.getElementById('displayName').innerText = `예금주: ${params.get('name') || ''}`;
+document.getElementById('displayBank').innerText = params.get('bank') || '은행 정보';
+document.getElementById('displayAcc').innerText = acc || '계좌번호 없음';
+document.getElementById('displayName').innerText = `예금주: ${params.get('name') || '미지정'}`;
 
-// 주소창 지우기
+// 주소창 파라미터 숨기기 (깔끔하게!)
 if (window.location.search) window.history.replaceState({}, document.title, window.location.pathname);
 
-function handleConfirm() {
+function pay(url) {
     if (!acc) return alert('계좌 정보가 없습니다.');
 
-    // 1. 계좌번호 복사
+    // 1. 클릭 즉시 복사 (allqr도 이 방식을 씁니다)
     const el = document.createElement('textarea');
     el.value = acc;
     document.body.appendChild(el);
@@ -45,20 +82,15 @@ function handleConfirm() {
     document.execCommand('copy');
     document.body.removeChild(el);
 
-    // 2. 안드로이드 앱 선택기(연결 프로그램) 호출
-    // 'bankid://' 또는 'supertoss://' 같은 공통 스킴을 던져서 시스템이 앱을 찾게 함
-    const ua = navigator.userAgent.toLowerCase();
-    if (ua.includes('android')) {
-        // 금융 관련 앱들을 불러오는 가장 범용적인 인텐트 방식입니다.
-        location.href = `intent://#Intent;action=android.intent.action.VIEW;scheme=kakaobank;package=com.kakaobank.channel;end`;
-        
-        // 위 방식이 특정 앱으로 쏠린다면, 아래의 범용 호출을 시도합니다.
-        setTimeout(() => {
-            location.href = `intent://#Intent;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;parseContext=true;end`;
-        }, 500);
-    } else {
-        alert("계좌가 복사되었습니다! 은행 앱을 열어주세요.");
-    }
+    // 2. 앱 실행 시도
+    location.href = url;
+
+    // 3. 앱이 없을 경우를 위한 안전장치
+    setTimeout(() => {
+        if (!document.hidden) {
+            alert("앱이 설치되어 있지 않거나 열 수 없습니다.\n계좌번호는 이미 복사되었습니다.");
+        }
+    }, 1500);
 }
 </script>
 </body>
