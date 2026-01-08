@@ -25,21 +25,6 @@
             <p class="text-center text-xs text-gray-500 mb-4 font-medium">✓ 복사 완료! 입금하실 앱을 선택하세요</p>
             
             <div class="grid grid-cols-3 gap-3">
-                <button onclick="openApp('toss://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#0064FF] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">T</div>
-                    <span class="text-xs font-medium text-gray-700">토스</span>
-                </button>
-                
-                <button onclick="openApp('kakaotalk://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#FEE500] rounded-full flex items-center justify-center text-[#3C1E1E] text-xl font-bold mb-2">K</div>
-                    <span class="text-xs font-medium text-gray-700">카톡/페이</span>
-                </button>
-                
-                <button onclick="openApp('naverpayapp://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#03C75A] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">N</div>
-                    <span class="text-xs font-medium text-gray-700">네이버페이</span>
-                </button>
-                
                 <button onclick="openApp('kakaobank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#FFEB00] rounded-full flex items-center justify-center text-[#3C1E1E] text-xl font-bold mb-2">카</div>
                     <span class="text-xs font-medium text-gray-700">카카오뱅크</span>
@@ -69,16 +54,76 @@
                     <div class="w-12 h-12 bg-[#0094CE] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">우</div>
                     <span class="text-xs font-medium text-gray-700">우리</span>
                 </button>
+
+                <button onclick="openApp('hanabank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#008485] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">하</div>
+                    <span class="text-xs font-medium text-gray-700">하나</span>
+                </button>
+
+                <button onclick="openApp('nhbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#00A651] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">NH</div>
+                    <span class="text-xs font-medium text-gray-700">NH농협</span>
+                </button>
+
+                <button onclick="openApp('ibkbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#004A98] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">IBK</div>
+                    <span class="text-xs font-medium text-gray-700">기업</span>
+                </button>
+
+                <button onclick="openApp('standardchartered://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#0F6FB9] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">SC</div>
+                    <span class="text-xs font-medium text-gray-700">SC제일</span>
+                </button>
+
+                <button onclick="openApp('citibank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#003C7D] rounded-full flex items-center justify-center text-white text-lg font-bold mb-2">CITI</div>
+                    <span class="text-xs font-medium text-gray-700">씨티</span>
+                </button>
+
+                <button onclick="openApp('busanbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#0054A6] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">부</div>
+                    <span class="text-xs font-medium text-gray-700">부산</span>
+                </button>
+
+                <button onclick="openApp('dgb://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#0E4A8D] rounded-full flex items-center justify-center text-white text-lg font-bold mb-2">DGB</div>
+                    <span class="text-xs font-medium text-gray-700">대구</span>
+                </button>
+
+                <button onclick="openApp('kjbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#0068B7] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">광</div>
+                    <span class="text-xs font-medium text-gray-700">광주</span>
+                </button>
+
+                <button onclick="openApp('jbbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#007AC7] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">전</div>
+                    <span class="text-xs font-medium text-gray-700">전북</span>
+                </button>
+
+                <button onclick="openApp('knbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#0B6BA8] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">경</div>
+                    <span class="text-xs font-medium text-gray-700">경남</span>
+                </button>
+
+                <button onclick="openApp('jejubank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#0076BE] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">제</div>
+                    <span class="text-xs font-medium text-gray-700">제주</span>
+                </button>
+
+                <button onclick="openApp('suhyupbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#0066B3] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">수</div>
+                    <span class="text-xs font-medium text-gray-700">수협</span>
+                </button>
+
+                <button onclick="openApp('postbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#E50012] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">우</div>
+                    <span class="text-xs font-medium text-gray-700">우체국</span>
+                </button>
             </div>
             
             <button onclick="location.reload()" class="w-full py-2 text-gray-400 text-sm hover:text-gray-600 mt-6">
                 정보 다시 확인
             </button>
-        </div>
-        
-        <div class="mt-6 text-xs text-gray-400 text-center leading-relaxed">
-            계좌번호가 복사되면 은행 앱에서<br>
-            바로 붙여넣기 하실 수 있습니다
         </div>
     </div>
     
@@ -100,6 +145,8 @@
             navigator.clipboard.writeText(acc).then(() => {
                 document.getElementById('confirmBtn').classList.add('hidden');
                 document.getElementById('bankList').classList.remove('hidden');
+            }).catch(err => {
+                alert(`복사 실패: ${acc}\n직접 복사해주세요.`);
             });
         }
 
@@ -107,13 +154,11 @@
             const start = Date.now();
             window.location.href = scheme;
             
-            // 앱이 열리지 않았을 때만 2.5초 후 반응
             setTimeout(() => {
-                // 사용자가 페이지를 떠났다가(앱 실행) 돌아온 시간이 3초 미만이면 앱이 안 열린 것으로 간주
+                // 2.5초 이내에 다시 브라우저로 돌아온 경우(앱 실행 실패)에만 실행
                 if (Date.now() - start < 3000) {
-                    if (confirm("앱이 설치되지 않았거나 실행할 수 없습니다.\n스토어로 이동할까요?")) {
-                        // 기본적으로 가장 많이 쓰는 토스 스토어로 유도 (원하시면 변경 가능)
-                        window.location.href = "https://toss.im";
+                    if (!document.hidden) {
+                        alert("선택하신 은행 앱을 실행할 수 없습니다.\n직접 앱을 열어주세요.");
                     }
                 }
             }, 2500);
