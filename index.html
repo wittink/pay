@@ -6,92 +6,89 @@
     <title>송금 안내</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* 클릭 시 눌리는 느낌을 주는 스타일 */
         .bank-item { @apply flex flex-col items-center justify-center p-4 bg-white rounded-2xl shadow-sm border border-gray-100 active:bg-blue-50 active:scale-95 transition-all; }
         .bank-text { @apply text-[11px] font-bold text-gray-600 mt-2; }
-    </apply>
+    </style>
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
-    <div class="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-2xl p-8">
-        <h2 class="text-xl font-bold text-center mb-6 text-gray-800">송금하실 앱을 선택하세요</h2>
+
+    <div class="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-2xl p-8 text-center">
+        <h2 class="text-xl font-bold mb-6 text-gray-800">송금하실 앱을 선택하세요</h2>
         
-        <div class="bg-blue-50 border-2 border-blue-100 rounded-2xl p-5 text-center mb-8">
-            <div id="displayBank" class="text-blue-600 font-bold text-sm mb-1 italic">은행 정보</div>
-            <div id="displayAcc" class="text-2xl font-mono font-bold text-gray-900 tracking-tighter">000-000-0000</div>
-            <div id="displayName" class="text-xs font-medium text-gray-400 mt-1">예금주 미지정</div>
+        <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 mb-8">
+            <div id="displayBank" class="text-blue-600 font-bold text-lg">은행 정보 로딩중...</div>
+            <div id="displayAcc" class="text-2xl font-mono font-bold my-2 text-gray-900 tracking-tighter">000-000-0000</div>
+            <div id="displayName" class="text-sm font-medium text-gray-500">예금주 로딩중...</div>
         </div>
         
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-3 gap-3 mb-6">
             <button onclick="pay('kakaobank://')" class="bank-item">
-                <div class="w-10 h-10 bg-[#FFEB00] rounded-full flex items-center justify-center font-bold">카</div>
+                <div class="w-10 h-10 bg-[#FFEB00] rounded-full flex items-center justify-center font-bold text-sm">카</div>
                 <span class="bank-text">카카오뱅크</span>
             </button>
             <button onclick="pay('supertoss://')" class="bank-item">
-                <div class="w-10 h-10 bg-[#0064FF] rounded-full flex items-center justify-center text-white font-bold">토</div>
+                <div class="w-10 h-10 bg-[#0064FF] rounded-full flex items-center justify-center text-white font-bold text-sm">토</div>
                 <span class="bank-text">토스</span>
             </button>
             <button onclick="pay('kbank://')" class="bank-item">
-                <div class="w-10 h-10 bg-[#002B5B] rounded-full flex items-center justify-center text-white font-bold">K</div>
+                <div class="w-10 h-10 bg-[#002B5B] rounded-full flex items-center justify-center text-white font-bold text-sm">K</div>
                 <span class="bank-text">케이뱅크</span>
             </button>
             <button onclick="pay('kbbank://')" class="bank-item">
-                <div class="w-10 h-10 bg-[#FFBC00] rounded-full flex items-center justify-center text-white font-bold">KB</div>
+                <div class="w-10 h-10 bg-[#FFBC00] rounded-full flex items-center justify-center text-white font-bold text-sm">KB</div>
                 <span class="bank-text">국민은행</span>
             </button>
             <button onclick="pay('shinhan-sr-app://')" class="bank-item">
-                <div class="w-10 h-10 bg-[#0046FF] rounded-full flex items-center justify-center text-white font-bold">신</div>
+                <div class="w-10 h-10 bg-[#0046FF] rounded-full flex items-center justify-center text-white font-bold text-sm">신</div>
                 <span class="bank-text">신한은행</span>
             </button>
             <button onclick="pay('wbbank://')" class="bank-item">
-                <div class="w-10 h-10 bg-[#0094CE] rounded-full flex items-center justify-center text-white font-bold">우</div>
+                <div class="w-10 h-10 bg-[#0094CE] rounded-full flex items-center justify-center text-white font-bold text-sm">우</div>
                 <span class="bank-text">우리은행</span>
             </button>
-            <button onclick="pay('hanabank://')" class="bank-item">
-                <div class="w-10 h-10 bg-[#008485] rounded-full flex items-center justify-center text-white font-bold">하</div>
-                <span class="bank-text">하나은행</span>
-            </button>
-            <button onclick="pay('nhallonepay-ansim://')" class="bank-item">
-                <div class="w-10 h-10 bg-[#00A651] rounded-full flex items-center justify-center text-white font-bold">NH</div>
-                <span class="bank-text">농협</span>
-            </button>
-            <button onclick="location.reload()" class="bank-item bg-gray-50">
-                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white font-bold">↻</div>
-                <span class="bank-text text-gray-400">새로고침</span>
-            </button>
         </div>
+
+        <p class="text-[11px] text-gray-400 leading-tight">
+            버튼을 누르면 계좌번호가 자동 복사되며<br>해당 은행 앱으로 연결됩니다.
+        </p>
     </div>
 
-<script>
-// 데이터 세팅
-const params = new URLSearchParams(window.location.search);
-const acc = params.get('acc') || '';
-document.getElementById('displayBank').innerText = params.get('bank') || '은행 정보';
-document.getElementById('displayAcc').innerText = acc || '계좌번호 없음';
-document.getElementById('displayName').innerText = `예금주: ${params.get('name') || '미지정'}`;
+    <script>
+        // 1. URL에서 정보 가져오기
+        const params = new URLSearchParams(window.location.search);
+        const acc = params.get('acc') || '';
+        document.getElementById('displayBank').innerText = params.get('bank') || '은행 정보';
+        document.getElementById('displayAcc').innerText = acc || '계좌번호 없음';
+        document.getElementById('displayName').innerText = `예금주: ${params.get('name') || '미지정'}`;
 
-// 주소창 파라미터 숨기기 (깔끔하게!)
-if (window.location.search) window.history.replaceState({}, document.title, window.location.pathname);
-
-function pay(url) {
-    if (!acc) return alert('계좌 정보가 없습니다.');
-
-    // 1. 클릭 즉시 복사 (allqr도 이 방식을 씁니다)
-    const el = document.createElement('textarea');
-    el.value = acc;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-
-    // 2. 앱 실행 시도
-    location.href = url;
-
-    // 3. 앱이 없을 경우를 위한 안전장치
-    setTimeout(() => {
-        if (!document.hidden) {
-            alert("앱이 설치되어 있지 않거나 열 수 없습니다.\n계좌번호는 이미 복사되었습니다.");
+        // 2. 주소창 깔끔하게 정리
+        if (window.location.search) {
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
-    }, 1500);
-}
-</script>
+
+        // 3. 복사 및 앱 실행 함수
+        function pay(url) {
+            if (!acc) return alert('계좌 정보가 없습니다.');
+
+            // 계좌 복사
+            const el = document.createElement('textarea');
+            el.value = acc;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            // 앱 실행
+            location.href = url;
+
+            // 앱 없을 경우 대비 안내
+            setTimeout(() => {
+                if (!document.hidden) {
+                    alert("해당 앱이 없거나 실행할 수 없습니다.\n계좌번호는 이미 복사되었습니다.");
+                }
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
