@@ -25,96 +25,85 @@
             <p class="text-center text-xs text-gray-500 mb-4 font-medium">✓ 복사 완료! 입금하실 앱을 선택하세요</p>
             
             <div class="grid grid-cols-3 gap-3">
-                <button onclick="goApp('kakaobank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#FFEB00] rounded-full flex items-center justify-center text-[#3C1E1E] text-lg font-bold mb-1">카</div>
-                    <span class="text-[11px] font-medium text-gray-700">카카오뱅크</span>
-                </button>
-                <button onclick="goApp('kbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#FFB800] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">K</div>
-                    <span class="text-[11px] font-medium text-gray-700">케이뱅크</span>
-                </button>
-                <button onclick="goApp('toss://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#0064FF] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">토</div>
-                    <span class="text-[11px] font-medium text-gray-700">토스뱅크</span>
-                </button>
-                <button onclick="goApp('kbbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#FFBC00] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">KB</div>
-                    <span class="text-[11px] font-medium text-gray-700">KB국민</span>
-                </button>
-                <button onclick="goApp('shinhan-sr-app://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#0046FF] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">신</div>
-                    <span class="text-[11px] font-medium text-gray-700">신한</span>
-                </button>
-                <button onclick="goApp('wbbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#0094CE] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">우</div>
-                    <span class="text-[11px] font-medium text-gray-700">우리</span>
-                </button>
-                <button onclick="goApp('hanabank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#008485] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">하</div>
-                    <span class="text-[11px] font-medium text-gray-700">하나</span>
-                </button>
-                <button onclick="goApp('nhbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#00A651] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">NH</div>
-                    <span class="text-[11px] font-medium text-gray-700">NH농협</span>
-                </button>
-                <button onclick="goApp('ibkbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#004A98] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">IB</div>
-                    <span class="text-[11px] font-medium text-gray-700">기업</span>
-                </button>
-                <button onclick="goApp('postbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#E50012] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">우</div>
-                    <span class="text-[11px] font-medium text-gray-700">우체국</span>
-                </button>
-                <button onclick="goApp('suhyupbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow border border-gray-100">
-                    <div class="w-10 h-10 bg-[#0066B3] rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">수</div>
-                    <span class="text-[11px] font-medium text-gray-700">수협</span>
-                </button>
-                <button onclick="location.reload()" class="flex flex-col items-center justify-center p-3 bg-gray-100 rounded-xl shadow border border-gray-200">
-                    <div class="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center text-white text-lg font-bold mb-1">↻</div>
-                    <span class="text-[11px] font-medium text-gray-600">다시</span>
-                </button>
+                <button onclick="openApp('kakaobank')" class="bank-btn">카카오뱅크</button>
+                <button onclick="openApp('kbank')" class="bank-btn">케이뱅크</button>
+                <button onclick="openApp('toss')" class="bank-btn">토스</button>
+                <button onclick="openApp('kb')" class="bank-btn">KB국민</button>
+                <button onclick="openApp('shinhan')" class="bank-btn">신한</button>
+                <button onclick="openApp('woori')" class="bank-btn">우리</button>
             </div>
         </div>
     </div>
-    
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const bank = params.get('bank') || '은행 정보 없음';
-        const acc = params.get('acc') || '';
-        const name = params.get('name') || '예금주 미지정';
-        
-        document.getElementById('displayBank').innerText = bank;
-        document.getElementById('displayAcc').innerText = acc || '계좌번호 없음';
-        document.getElementById('displayName').innerText = `예금주: ${name}`;
-        
-        function handleConfirm() {
-            if (!acc) return alert("계좌번호가 없습니다.");
-            
-            // 복사 실행
-            const el = document.createElement('textarea');
-            el.value = acc;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
 
-            document.getElementById('confirmBtn').classList.add('hidden');
-            document.getElementById('bankList').classList.remove('hidden');
-        }
+<script>
+const params = new URLSearchParams(window.location.search);
+const bank = params.get('bank') || '은행 정보 없음';
+const acc = params.get('acc') || '';
+const name = params.get('name') || '예금주 미지정';
 
-        // 앱 실행 전용 함수 (군더더기 삭제)
-        function goApp(url) {
-            // 1. 새 창이나 아이프레임 없이 현재 창에서 바로 호출 (가장 강력한 방식)
-            location.href = url;
-            
-            // 2. 만약 1초 뒤에도 아무 반응이 없다면 (웹뷰나 일부 환경)
-            setTimeout(function() {
-                if (!document.hidden) {
-                    // 사용자에게 수동 실행 안내 (강제 alert 삭제)
-                    console.log("앱 실행 시도 완료");
-                }
-            }, 1000);
-        }
-    </script>
+document.getElementById('displayBank').innerText = bank;
+document.getElementById('displayAcc').innerText = acc || '계좌번호 없음';
+document.getElementById('displayName').innerText = `예금주: ${name}`;
+
+function handleConfirm() {
+    if (!acc) {
+        alert("❌ 계좌 정보가 없습니다.");
+        return;
+    }
+    navigator.clipboard.writeText(acc).then(() => {
+        document.getElementById('confirmBtn').classList.add('hidden');
+        document.getElementById('bankList').classList.remove('hidden');
+    }).catch(() => {
+        alert(`복사 실패: ${acc}\n직접 복사해주세요.`);
+    });
+}
+
+const bankLinks = {
+    kakaobank: {
+        android: 'intent://main#Intent;scheme=kakaobank;package=com.kakaobank.channel;end',
+        ios: 'kakaobank://'
+    },
+    kbank: {
+        android: 'intent://main#Intent;scheme=kbank;package=com.kbankwith.smartbank;end',
+        ios: 'kbank://'
+    },
+    toss: {
+        android: 'intent://#Intent;scheme=toss;package=viva.republica.toss;end',
+        ios: 'toss://'
+    },
+    kb: {
+        android: 'intent://#Intent;scheme=kbbank;package=com.kbstar.kbbank;end',
+        ios: 'kbbank://'
+    },
+    shinhan: {
+        android: 'intent://#Intent;scheme=shinhan-sr-app;package=com.shinhan.sbanking;end',
+        ios: 'shinhan-sr-app://'
+    },
+    woori: {
+        android: 'intent://#Intent;scheme=wbbank;package=com.wooribank.smart;end',
+        ios: 'wbbank://'
+    }
+};
+
+function openApp(bankKey) {
+    const ua = navigator.userAgent.toLowerCase();
+    const isAndroid = ua.includes('android');
+    const isIOS = /iphone|ipad|ipod/.test(ua);
+
+    const link = bankLinks[bankKey];
+    if (!link) {
+        alert('지원하지 않는 은행입니다');
+        return;
+    }
+
+    if (isAndroid) {
+        location.href = link.android;
+    } else if (isIOS) {
+        location.href = link.ios;
+    } else {
+        alert('모바일에서만 사용 가능합니다');
+    }
+}
+</script>
 </body>
 </html>
