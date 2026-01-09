@@ -25,7 +25,21 @@
             <p class="text-center text-xs text-gray-500 mb-4 font-medium">✓ 복사 완료! 입금하실 앱을 선택하세요</p>
             
             <div class="grid grid-cols-3 gap-3">
-
+                <button onclick="openApp('supertoss://send')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#0064FF] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">T</div>
+                    <span class="text-xs font-medium text-gray-700">토스</span>
+                </button>
+                
+                <button onclick="openApp('kakaotalk://kakaopay')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#FEE500] rounded-full flex items-center justify-center text-[#3C1E1E] text-xl font-bold mb-2">K</div>
+                    <span class="text-xs font-medium text-gray-700">카카오페이</span>
+                </button>
+                
+                <button onclick="openApp('https://www.naverpay.com')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                    <div class="w-12 h-12 bg-[#03C75A] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">N</div>
+                    <span class="text-xs font-medium text-gray-700">네이버페이</span>
+                </button>
+                
                 <button onclick="openApp('kakaobank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#FFEB00] rounded-full flex items-center justify-center text-[#3C1E1E] text-xl font-bold mb-2">카</div>
                     <span class="text-xs font-medium text-gray-700">카카오뱅크</span>
@@ -182,31 +196,59 @@
             });
         }
         
-        // 앱 실행 함수 (실패 시 앱스토어로 유도)
+        // 앱 실행 함수
         function openApp(scheme) {
             const appStoreLinks = {
                 'supertoss://send': 'https://apps.apple.com/kr/app/toss/id839333328',
                 'kakaotalk://kakaopay': 'https://apps.apple.com/kr/app/kakaotalk/id362057947',
+                'https://www.naverpay.com': 'https://apps.apple.com/kr/app/naver/id393499958',
+                'kakaobank://': 'https://apps.apple.com/kr/app/kakaobank/id1258016944',
+                'kbank://': 'https://apps.apple.com/kr/app/케이뱅크/id1178872627',
+                'tossbank://': 'https://apps.apple.com/kr/app/토스뱅크/id1525863162',
                 'kbbank://': 'https://apps.apple.com/kr/app/kb-pay/id695436326',
                 'shinhan-sr-app://': 'https://apps.apple.com/kr/app/shinhan-sol/id357484932',
                 'wbbank://': 'https://apps.apple.com/kr/app/우리won뱅킹/id1470181651',
                 'hanabank://': 'https://apps.apple.com/kr/app/하나원큐/id847268987',
-                'kakaobank://': 'https://apps.apple.com/kr/app/kakaobank/id1258016944'
+                'nhbank://': 'https://apps.apple.com/kr/app/nh농협은행/id1177889819',
+                'ibkbank://': 'https://apps.apple.com/kr/app/i-one뱅크/id328959841',
+                'standardchartered://': 'https://apps.apple.com/kr/app/sc제일은행/id369729477',
+                'citibank://': 'https://apps.apple.com/kr/app/씨티모바일/id373424464',
+                'busanbank://': 'https://apps.apple.com/kr/app/부산은행/id398027331',
+                'dgb://': 'https://apps.apple.com/kr/app/dgb모바일/id436125468',
+                'kjbank://': 'https://apps.apple.com/kr/app/광주은행/id398026911',
+                'jbbank://': 'https://apps.apple.com/kr/app/전북은행/id398027025',
+                'knbank://': 'https://apps.apple.com/kr/app/경남은행/id398026653',
+                'jejubank://': 'https://apps.apple.com/kr/app/제주은행/id398027179',
+                'suhyupbank://': 'https://apps.apple.com/kr/app/sh수협은행/id1444125908',
+                'kdb://': 'https://apps.apple.com/kr/app/kdb-one/id391114954',
+                'kexim://': 'https://apps.apple.com/kr/app/수출입은행/id1191050047',
+                'postbank://': 'https://apps.apple.com/kr/app/우체국-모바일뱅킹/id394223887'
             };
             
+            const startTime = Date.now();
+            let pageHidden = false;
+            
+            // 페이지 숨김 감지
+            const visibilityHandler = () => {
+                pageHidden = true;
+            };
+            document.addEventListener('visibilitychange', visibilityHandler);
+            
+            // 앱 실행 시도
             window.location.href = scheme;
             
-            // 2초 후에도 페이지가 그대로면 앱이 없는 것으로 판단
+            // 1초 후 앱스토어로 이동 (앱이 안 열렸으면)
             setTimeout(() => {
-                if (document.hidden) return; // 앱이 열렸으면 페이지가 숨겨짐
+                document.removeEventListener('visibilitychange', visibilityHandler);
                 
-                const appName = scheme.split('://')[0];
-                const shouldRedirect = confirm(`${appName} 앱이 설치되지 않은 것 같습니다.\n\n앱스토어로 이동하시겠습니까?`);
+                // 페이지가 숨겨졌거나 포커스를 잃었으면 앱이 열린 것
+                if (pageHidden || document.hidden) return;
                 
-                if (shouldRedirect && appStoreLinks[scheme]) {
+                // 앱이 안 열렸으면 바로 앱스토어로
+                if (appStoreLinks[scheme]) {
                     window.location.href = appStoreLinks[scheme];
                 }
-            }, 2000);
+            }, 1000);
         }
     </script>
 </body>
