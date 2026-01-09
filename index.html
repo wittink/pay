@@ -5,64 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>송금 안내</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* allqr.kr 특유의 깔끔한 버튼 스타일 */
+        .btn-bank { @apply flex flex-col items-center justify-center p-4 bg-white rounded-2xl shadow-sm border border-gray-100 active:bg-blue-50 active:scale-95 transition-all; }
+        .btn-text { @apply text-[11px] font-bold text-gray-700 mt-2; }
+    </style>
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
 
     <div class="w-full max-w-sm mx-auto bg-white rounded-3xl shadow-2xl p-8 text-center">
         <h2 class="text-xl font-bold mb-6 text-gray-800">계좌 정보를 확인해주세요</h2>
         
-        <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 mb-8">
-            <div id="displayBank" class="text-blue-600 font-bold text-lg">은행</div>
-            <div id="displayAcc" class="text-2xl font-mono font-bold my-2 text-gray-900 tracking-tighter">000-000-0000</div>
-            <div id="displayName" class="text-sm font-medium text-gray-500">예금주</div>
+        <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 mb-8 text-center">
+            <div id="bank" class="text-blue-600 font-bold text-lg mb-1">은행 정보</div>
+            <div id="acc" class="text-2xl font-mono font-bold text-gray-900 tracking-tighter">0000-0000-0000</div>
+            <div id="name" class="text-sm font-medium text-gray-500 mt-1">예금주</div>
         </div>
         
-        <button onclick="openSystemChooser()" 
+        <button id="mainBtn" onclick="runAllQR()" 
             class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all">
             계좌번호 복사 및 은행 앱 열기
         </button>
 
-        <p class="mt-4 text-[11px] text-gray-400 leading-tight">
-            버튼을 누르면 하단에 설치된 은행 앱 목록이 나타납니다.<br>
-            (안드로이드 전용 기능)
-        </p>
+        <div id="bankGrid" class="hidden">
+            <p class="text-[12px] font-bold text-blue-500 mb-4">✓ 복사 완료! 송금하실 앱을 선택하세요</p>
+            <div class="grid grid-cols-3 gap-3">
+                <button onclick="go('kakaobank://')" class="btn-bank">
+                    <div class="w-10 h-10 bg-[#FFEB00] rounded-full flex items-center justify-center font-bold text-xs text-black">카톡</div>
+                    <span class="btn-text">카카오뱅크</span>
+                </button>
+                <button onclick="go('toss')" class="btn-bank">
+                    <div class="w-10 h-10 bg-[#0064FF] rounded-full flex items-center justify-center text-white font-bold text-xs">토스</div>
+                    <span class="btn-text text-blue-600">토스</span>
+                </button>
+                <button onclick="go('kbank://')" class="btn-bank">
+                    <div class="w-10 h-10 bg-[#002B5B] rounded-full flex items-center justify-center text-white font-bold text-xs">K</div>
+                    <span class="btn-text">케이뱅크</span>
+                </button>
+                <button onclick="go('kbbank://')" class="btn-bank">
+                    <div class="w-10 h-10 bg-[#FFBC00] rounded-full flex items-center justify-center text-white font-bold text-xs text-white">KB</div>
+                    <span class="btn-text">국민은행</span>
+                </button>
+                <button onclick="go('shinhan-sr-app://')" class="btn-bank">
+                    <div class="w-10 h-10 bg-[#0046FF] rounded-full flex items-center justify-center text-white font-bold text-xs">신한</div>
+                    <span class="btn-text">신한은행</span>
+                </button>
+                <button onclick="go('wooribankwws://')" class="btn-bank">
+                    <div class="w-10 h-10 bg-[#0094CE] rounded-full flex items-center justify-center text-white font-bold text-xs">우리</div>
+                    <span class="btn-text">우리은행</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // 1. 데이터 로드 (URL 파라미터 방식)
-        const params = new URLSearchParams(window.location.search);
-        const acc = params.get('acc') || '000-000-0000';
-        document.getElementById('displayBank').innerText = params.get('bank') || '은행 정보';
-        document.getElementById('displayAcc').innerText = acc;
-        document.getElementById('displayName').innerText = `예금주: ${params.get('name') || '미지정'}`;
+        // URL에서 데이터 추출
+        const p = new URLSearchParams(location.search);
+        const bankVal = p.get('bank') || '';
+        const accVal = p.get('acc') || '';
+        const nameVal = p.get('name') || '';
 
-        // 2. 핵심 함수: 안드로이드 시스템 앱 선택기 호출
-        function openSystemChooser() {
-            // 계좌번호 텍스트를 안전하게 인코딩
-            const text = encodeURIComponent(acc);
+        document.getElementById('bank').innerText = bankVal;
+        document.getElementById('acc').innerText = accVal;
+        document.getElementById('name').innerText = `예금주: ${nameVal}`;
 
-            // 안드로이드 시스템에 "이 텍스트를 처리할 수 있는 앱을 모두 나열해"라고 명령하는 표준 Intent
-            const intent = [
-                `intent://send?text=${text}#Intent`,
-                `action=android.intent.action.SEND`,
-                `type=text/plain`,
-                `end`
-            ].join(';');
+        // allqr.kr의 핵심 작동 함수
+        function runAllQR() {
+            if (!accVal) return alert('계좌 정보가 없습니다.');
 
-            const ua = navigator.userAgent.toLowerCase();
-            if (ua.includes('android')) {
-                // 안드로이드에서 시스템 앱 목록 팝업 실행
-                location.href = intent;
+            // 1. 클립보드 복사
+            const t = document.createElement('textarea');
+            t.value = accVal; document.body.appendChild(t);
+            t.select(); document.execCommand('copy');
+            document.body.removeChild(t);
+
+            // 2. UI 전환 (iOS에서도 무조건 목록이 보이게 함)
+            document.getElementById('mainBtn').classList.add('hidden');
+            document.getElementById('bankGrid').classList.remove('hidden');
+        }
+
+        // 앱 실행 로직
+        function go(u) {
+            if (u === 'toss') {
+                // 토스 전용 연동 주소 (iOS/안드로이드 공용)
+                location.href = `supertoss://send?bank=${encodeURIComponent(bankVal)}&accountNo=${accVal}`;
             } else {
-                // 아이폰 등 기타 환경에서는 텍스트 복사만 수행
-                const el = document.createElement('textarea');
-                el.value = acc;
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-                alert("계좌번호가 복사되었습니다.\n은행 앱을 열어 붙여넣어 주세요.");
+                location.href = u;
             }
+            
+            // 앱이 없을 경우 알림 (iOS 대처)
+            setTimeout(() => {
+                if (!document.hidden) alert("앱이 설치되어 있지 않거나 실행할 수 없습니다.");
+            }, 1500);
         }
     </script>
 </body>
