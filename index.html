@@ -25,124 +25,59 @@
             <p class="text-center text-xs text-gray-500 mb-4 font-medium">✓ 복사 완료! 입금하실 앱을 선택하세요</p>
             
             <div class="grid grid-cols-3 gap-3">
-                <button onclick="openApp('supertoss://send')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('toss')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#0064FF] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">T</div>
                     <span class="text-xs font-medium text-gray-700">토스</span>
                 </button>
                 
-                <button onclick="openApp('kakaotalk://kakaopay')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('kakaopay')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#FEE500] rounded-full flex items-center justify-center text-[#3C1E1E] text-xl font-bold mb-2">K</div>
                     <span class="text-xs font-medium text-gray-700">카카오페이</span>
                 </button>
                 
-                <button onclick="openApp('https://www.naverpay.com')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#03C75A] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">N</div>
-                    <span class="text-xs font-medium text-gray-700">네이버페이</span>
-                </button>
-                
-                <button onclick="openApp('kakaobank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('kakaobank')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#FFEB00] rounded-full flex items-center justify-center text-[#3C1E1E] text-xl font-bold mb-2">카</div>
                     <span class="text-xs font-medium text-gray-700">카카오뱅크</span>
                 </button>
                 
-                <button onclick="openApp('kbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#FFB800] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">K</div>
-                    <span class="text-xs font-medium text-gray-700">케이뱅크</span>
-                </button>
-                
-                <button onclick="openApp('tossbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('tossbank')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#0064FF] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">토</div>
                     <span class="text-xs font-medium text-gray-700">토스뱅크</span>
                 </button>
                 
-                <button onclick="openApp('kbbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('kb')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#FFBC00] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">KB</div>
                     <span class="text-xs font-medium text-gray-700">KB국민</span>
                 </button>
                 
-                <button onclick="openApp('shinhan-sr-app://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('shinhan')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#0046FF] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">신</div>
                     <span class="text-xs font-medium text-gray-700">신한</span>
                 </button>
                 
-                <button onclick="openApp('wbbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('woori')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#0094CE] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">우</div>
                     <span class="text-xs font-medium text-gray-700">우리</span>
                 </button>
                 
-                <button onclick="openApp('hanabank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('hana')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#008485] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">하</div>
                     <span class="text-xs font-medium text-gray-700">하나</span>
                 </button>
                 
-                <button onclick="openApp('nhbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('nh')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#00A651] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">NH</div>
                     <span class="text-xs font-medium text-gray-700">NH농협</span>
                 </button>
                 
-                <button onclick="openApp('ibkbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('ibk')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#004A98] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">IBK</div>
                     <span class="text-xs font-medium text-gray-700">기업</span>
                 </button>
                 
-                <button onclick="openApp('standardchartered://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
+                <button onclick="openApp('sc')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
                     <div class="w-12 h-12 bg-[#0F6FB9] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">SC</div>
                     <span class="text-xs font-medium text-gray-700">SC제일</span>
-                </button>
-                
-                <button onclick="openApp('citibank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#003C7D] rounded-full flex items-center justify-center text-white text-lg font-bold mb-2">CITI</div>
-                    <span class="text-xs font-medium text-gray-700">씨티</span>
-                </button>
-                
-                <button onclick="openApp('busanbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#0054A6] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">부</div>
-                    <span class="text-xs font-medium text-gray-700">부산</span>
-                </button>
-                
-                <button onclick="openApp('dgb://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#0E4A8D] rounded-full flex items-center justify-center text-white text-lg font-bold mb-2">DGB</div>
-                    <span class="text-xs font-medium text-gray-700">대구</span>
-                </button>
-                
-                <button onclick="openApp('kjbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#0068B7] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">광</div>
-                    <span class="text-xs font-medium text-gray-700">광주</span>
-                </button>
-                
-                <button onclick="openApp('jbbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#007AC7] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">전</div>
-                    <span class="text-xs font-medium text-gray-700">전북</span>
-                </button>
-                
-                <button onclick="openApp('knbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#0B6BA8] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">경</div>
-                    <span class="text-xs font-medium text-gray-700">경남</span>
-                </button>
-                
-                <button onclick="openApp('jejubank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#0076BE] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">제</div>
-                    <span class="text-xs font-medium text-gray-700">제주</span>
-                </button>
-                
-                <button onclick="openApp('suhyupbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#0066B3] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">수</div>
-                    <span class="text-xs font-medium text-gray-700">수협</span>
-                </button>
-                
-                <button onclick="openApp('kdb://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#003DA5] rounded-full flex items-center justify-center text-white text-lg font-bold mb-2">KDB</div>
-                    <span class="text-xs font-medium text-gray-700">산업</span>
-                </button>
-                
-                <button onclick="openApp('kexim://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#004098] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">수</div>
-                    <span class="text-xs font-medium text-gray-700">수출입</span>
-                </button>
-                
-                <button onclick="openApp('postbank://')" class="flex flex-col items-center justify-center p-3 bg-white rounded-xl shadow hover:shadow-md active:scale-95 transition-all border border-gray-100">
-                    <div class="w-12 h-12 bg-[#E50012] rounded-full flex items-center justify-center text-white text-xl font-bold mb-2">우</div>
-                    <span class="text-xs font-medium text-gray-700">우체국</span>
                 </button>
             </div>
             
@@ -197,58 +132,104 @@
         }
         
         // 앱 실행 함수
-        function openApp(scheme) {
-            const appStoreLinks = {
-                'supertoss://send': 'https://apps.apple.com/kr/app/toss/id839333328',
-                'kakaotalk://kakaopay': 'https://apps.apple.com/kr/app/kakaotalk/id362057947',
-                'https://www.naverpay.com': 'https://apps.apple.com/kr/app/naver/id393499958',
-                'kakaobank://': 'https://apps.apple.com/kr/app/kakaobank/id1258016944',
-                'kbank://': 'https://apps.apple.com/kr/app/케이뱅크/id1178872627',
-                'tossbank://': 'https://apps.apple.com/kr/app/토스뱅크/id1525863162',
-                'kbbank://': 'https://apps.apple.com/kr/app/kb-pay/id695436326',
-                'shinhan-sr-app://': 'https://apps.apple.com/kr/app/shinhan-sol/id357484932',
-                'wbbank://': 'https://apps.apple.com/kr/app/우리won뱅킹/id1470181651',
-                'hanabank://': 'https://apps.apple.com/kr/app/하나원큐/id847268987',
-                'nhbank://': 'https://apps.apple.com/kr/app/nh농협은행/id1177889819',
-                'ibkbank://': 'https://apps.apple.com/kr/app/i-one뱅크/id328959841',
-                'standardchartered://': 'https://apps.apple.com/kr/app/sc제일은행/id369729477',
-                'citibank://': 'https://apps.apple.com/kr/app/씨티모바일/id373424464',
-                'busanbank://': 'https://apps.apple.com/kr/app/부산은행/id398027331',
-                'dgb://': 'https://apps.apple.com/kr/app/dgb모바일/id436125468',
-                'kjbank://': 'https://apps.apple.com/kr/app/광주은행/id398026911',
-                'jbbank://': 'https://apps.apple.com/kr/app/전북은행/id398027025',
-                'knbank://': 'https://apps.apple.com/kr/app/경남은행/id398026653',
-                'jejubank://': 'https://apps.apple.com/kr/app/제주은행/id398027179',
-                'suhyupbank://': 'https://apps.apple.com/kr/app/sh수협은행/id1444125908',
-                'kdb://': 'https://apps.apple.com/kr/app/kdb-one/id391114954',
-                'kexim://': 'https://apps.apple.com/kr/app/수출입은행/id1191050047',
-                'postbank://': 'https://apps.apple.com/kr/app/우체국-모바일뱅킹/id394223887'
-            };
+        function openApp(appId) {
+            // iOS/Android 구분
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
             
-            const startTime = Date.now();
-            let pageHidden = false;
-            
-            // 페이지 숨김 감지
-            const visibilityHandler = () => {
-                pageHidden = true;
-            };
-            document.addEventListener('visibilitychange', visibilityHandler);
-            
-            // 앱 실행 시도
-            window.location.href = scheme;
-            
-            // 1초 후 앱스토어로 이동 (앱이 안 열렸으면)
-            setTimeout(() => {
-                document.removeEventListener('visibilitychange', visibilityHandler);
-                
-                // 페이지가 숨겨졌거나 포커스를 잃었으면 앱이 열린 것
-                if (pageHidden || document.hidden) return;
-                
-                // 앱이 안 열렸으면 바로 앱스토어로
-                if (appStoreLinks[scheme]) {
-                    window.location.href = appStoreLinks[scheme];
+            // 각 은행별 정보 (실제 확인된 정보 기반)
+            const apps = {
+                'toss': {
+                    ios: 'supertoss://',
+                    android: 'intent://send#Intent;scheme=supertoss;package=viva.republica.toss;end',
+                    playStore: 'https://play.google.com/store/apps/details?id=viva.republica.toss',
+                    appStore: 'https://apps.apple.com/kr/app/toss/id839333328'
+                },
+                'kb': {
+                    ios: 'kbbank://',
+                    android: 'intent://#Intent;scheme=kbbank;package=com.kbstar.kbbank;end',
+                    playStore: 'https://play.google.com/store/apps/details?id=com.kbstar.kbbank',
+                    appStore: 'https://apps.apple.com/kr/app/kb스타뱅킹/id373742138'
+                },
+                'shinhan': {
+                    ios: 'shinhan-sr-app://',
+                    android: 'intent://#Intent;scheme=shinhan-sr-app;package=com.shinhan.sbanking;end',
+                    playStore: 'https://play.google.com/store/apps/details?id=com.shinhan.sbanking',
+                    appStore: 'https://apps.apple.com/kr/app/신한-sol뱅크/id357484932'
+                },
+                'woori': {
+                    ios: 'wbbank://',
+                    android: 'intent://#Intent;scheme=wbbank;package=com.wooribank.smart.npib;end',
+                    playStore: 'https://play.google.com/store/apps/details?id=com.wooribank.smart.npib',
+                    appStore: 'https://apps.apple.com/kr/app/우리won뱅킹/id1470181651'
+                },
+                'hana': {
+                    ios: 'hanabank://',
+                    android: 'intent://#Intent;scheme=hanabank;package=com.kebhana.hanapush.push;end',
+                    playStore: 'https://play.google.com/store/apps/details?id=com.kebhana.hanapush.push',
+                    appStore: 'https://apps.apple.com/kr/app/하나원큐/id847268987'
+                },
+                'nh': {
+                    ios: 'nhbank://',
+                    android: 'intent://#Intent;scheme=nhallonbank;package=com.nh.android.banking;end',
+                    playStore: 'https://play.google.com/store/apps/details?id=com.nh.android.banking',
+                    appStore: 'https://apps.apple.com/kr/app/nh농협은행/id1177889819'
+                },
+                'ibk': {
+                    ios: 'ibkbank://',
+                    android: 'intent://#Intent;scheme=ibkbank;package=com.ibk.neobanking;end',
+                    playStore: 'https://play.google.com/store/apps/details?id=com.ibk.neobanking',
+                    appStore: 'https://apps.apple.com/kr/app/i-one뱅크/id328959841'
+                },
+                'sc': {
+                    ios: 'scmobile://',
+                    android: 'intent://#Intent;scheme=scmobile;package=com.sc.danb.scbankapp;end',
+                    playStore: 'https://play.google.com/store/apps/details?id=com.sc.danb.scbankapp',
+                    appStore: 'https://apps.apple.com/kr/app/sc제일은행/id369729477'
                 }
-            }, 1000);
+            };
+            
+            const app = apps[appId];
+            if (!app) {
+                alert('앱 정보를 찾을 수 없습니다.');
+                return;
+            }
+            
+            if (isAndroid) {
+                // 안드로이드: Intent URL 사용
+                window.location.href = app.android;
+                
+                // 1초 후에도 페이지가 그대로면 플레이스토어로
+                setTimeout(() => {
+                    if (!document.hidden) {
+                        window.location.href = app.playStore;
+                    }
+                }, 1000);
+                
+            } else if (isIOS) {
+                // iOS: URL Scheme 사용
+                let pageHidden = false;
+                
+                const visibilityHandler = () => {
+                    pageHidden = true;
+                };
+                
+                document.addEventListener('visibilitychange', visibilityHandler);
+                
+                window.location.href = app.ios;
+                
+                setTimeout(() => {
+                    document.removeEventListener('visibilitychange', visibilityHandler);
+                    
+                    if (!pageHidden && !document.hidden) {
+                        window.location.href = app.appStore;
+                    }
+                }, 1000);
+                
+            } else {
+                // 데스크톱: 플레이스토어로
+                window.open(app.playStore, '_blank');
+            }
         }
     </script>
 </body>
