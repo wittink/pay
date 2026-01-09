@@ -138,74 +138,68 @@
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
             
             // 각 은행별 정보 (실제 확인된 정보 기반)
-            const apps = {
-                'toss': {
-                    ios: 'supertoss://',
-                    android: 'intent://send#Intent;scheme=supertoss;package=viva.republica.toss;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=viva.republica.toss',
-                    appStore: 'https://apps.apple.com/kr/app/toss/id839333328'
-                },
-                'kakaopay': {
-                    ios: 'kakaotalk://kakaopay',
-                    android: 'intent://kakaopay#Intent;scheme=kakaotalk;package=com.kakao.talk;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.kakao.talk',
-                    appStore: 'https://apps.apple.com/kr/app/kakaotalk/id362057947'
-                },
-                'kakaobank': {
-                    ios: 'kakaobank://',
-                    android: 'intent://#Intent;scheme=kakaobank;package=com.kakaobank.channel;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.kakaobank.channel',
-                    appStore: 'https://apps.apple.com/kr/app/kakaobank/id1258016944'
-                },
-                'tossbank': {
-                    ios: 'tossbank://',
-                    android: 'intent://#Intent;scheme=tossbank;package=com.tossbank.app;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.tossbank.app',
-                    appStore: 'https://apps.apple.com/kr/app/토스뱅크/id1525863162'
-                },
-                'kb': {
-                    ios: 'kbbank://',
-                    android: 'intent://#Intent;scheme=kbbank;package=com.kbstar.kbbank;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.kbstar.kbbank',
-                    appStore: 'https://apps.apple.com/kr/app/kb스타뱅킹/id373742138'
-                },
-                'shinhan': {
-                    ios: 'shinhan-sr-app://',
-                    android: 'intent://#Intent;scheme=shinhan-sr-app;package=com.shinhan.sbanking;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.shinhan.sbanking',
-                    appStore: 'https://apps.apple.com/kr/app/신한-sol뱅크/id357484932'
-                },
-                'woori': {
-                    ios: 'wbbank://',
-                    android: 'intent://#Intent;scheme=wbbank;package=com.wooribank.smart.npib;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.wooribank.smart.npib',
-                    appStore: 'https://apps.apple.com/kr/app/우리won뱅킹/id1470181651'
-                },
-                'hana': {
-                    ios: 'hanabank://',
-                    android: 'intent://#Intent;scheme=hanabank;package=com.kebhana.hanapush.push;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.kebhana.hanapush.push',
-                    appStore: 'https://apps.apple.com/kr/app/하나원큐/id847268987'
-                },
-                'nh': {
-                    ios: 'nhbank://',
-                    android: 'intent://#Intent;scheme=nhallonbank;package=com.nh.android.banking;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.nh.android.banking',
-                    appStore: 'https://apps.apple.com/kr/app/nh농협은행/id1177889819'
-                },
-                'ibk': {
-                    ios: 'ibkbank://',
-                    android: 'intent://#Intent;scheme=ibkbank;package=com.ibk.neobanking;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.ibk.neobanking',
-                    appStore: 'https://apps.apple.com/kr/app/i-one뱅크/id328959841'
-                },
-                'sc': {
-                    ios: 'scmobile://',
-                    android: 'intent://#Intent;scheme=scmobile;package=com.sc.danb.scbankapp;end',
-                    playStore: 'https://play.google.com/store/apps/details?id=com.sc.danb.scbankapp',
-                    appStore: 'https://apps.apple.com/kr/app/sc제일은행/id369729477'
-                }
-            };
+const apps = {
+    'toss': {
+        ios: 'supertoss://',
+        android: 'intent://#Intent;scheme=supertoss;package=viva.republica.toss;end',
+        playStore: 'https://play.google.com/store/apps/details?id=viva.republica.toss',
+        appStore: 'https://apps.apple.com/kr/app/toss/id839333328'
+    },
+    'kakaopay': {
+        ios: 'kakaotalk://kakaopay',
+        android: 'intent://kakaopay#Intent;scheme=kakaotalk;package=com.kakao.talk;end',
+        playStore: 'https://play.google.com/store/apps/details?id=com.kakao.talk',
+        appStore: 'https://apps.apple.com/kr/app/kakaotalk/id362057947'
+    },
+    'kakaobank': {
+        ios: 'kakaobank://',
+        android: 'intent://#Intent;scheme=kakaobank;package=com.kakaobank.channel;end',
+        playStore: 'https://play.google.com/store/apps/details?id=com.kakaobank.channel',
+        appStore: 'https://apps.apple.com/kr/app/kakaobank/id1258016944'
+    },
+    'tossbank': {
+        ios: 'supertoss://', // 토스뱅크는 토스 앱 내에 포함되어 있으므로 동일 스키마 권장
+        android: 'intent://#Intent;scheme=supertoss;package=viva.republica.toss;end',
+        playStore: 'https://play.google.com/store/apps/details?id=viva.republica.toss',
+        appStore: 'https://apps.apple.com/kr/app/toss/id839333328'
+    },
+    'kb': {
+        ios: 'kb-acp://', // KB스타뱅킹 최신 스키마
+        android: 'intent://#Intent;scheme=kb-acp;package=com.kbstar.kbbank;end',
+        playStore: 'https://play.google.com/store/apps/details?id=com.kbstar.kbbank',
+        appStore: 'https://apps.apple.com/kr/app/kb스타뱅킹/id373742138'
+    },
+    'shinhan': {
+        ios: 'shins00ad0://', // 신한 SOL뱅크 최신 스키마
+        android: 'intent://#Intent;scheme=shins00ad0;package=com.shinhan.sbanking;end',
+        playStore: 'https://play.google.com/store/apps/details?id=com.shinhan.sbanking',
+        appStore: 'https://apps.apple.com/kr/app/신한-sol뱅크/id357484932'
+    },
+    'woori': {
+        ios: 'wooribank://',
+        android: 'intent://#Intent;scheme=wooribank;package=com.wooribank.smart.npib;end',
+        playStore: 'https://play.google.com/store/apps/details?id=com.wooribank.smart.npib',
+        appStore: 'https://apps.apple.com/kr/app/우리won뱅킹/id1470181651'
+    },
+    'hana': {
+        ios: 'hanabank://',
+        android: 'intent://#Intent;scheme=hanabank;package=com.kebhana.hanapush.push;end',
+        playStore: 'https://play.google.com/store/apps/details?id=com.kebhana.hanapush.push',
+        appStore: 'https://apps.apple.com/kr/app/하나원큐/id847268987'
+    },
+    'nh': {
+        ios: 'nhappcash-acp://', // NH농협 최신 스키마
+        android: 'intent://#Intent;scheme=nhappcash-acp;package=com.nh.android.banking;end',
+        playStore: 'https://play.google.com/store/apps/details?id=com.nh.android.banking',
+        appStore: 'https://apps.apple.com/kr/app/nh농협은행/id1177889819'
+    },
+    'ibk': {
+        ios: 'ibkonebank://',
+        android: 'intent://#Intent;scheme=ibkonebank;package=com.ibk.neobanking;end',
+        playStore: 'https://play.google.com/store/apps/details?id=com.ibk.neobanking',
+        appStore: 'https://apps.apple.com/kr/app/i-one뱅크/id328959841'
+    }
+};
             
             const app = apps[appId];
             if (!app) {
@@ -252,3 +246,4 @@
     </script>
 </body>
 </html>
+
